@@ -5,63 +5,62 @@ import java.util.Scanner;
 public class ex6 {
 	
 	public static void main(String[] args) {
-		int n;
+		int n, a1;
 		Scanner in = new Scanner(System.in);
 		
         System.out.println("Hello, Enter N:");
         n = in.nextInt();
+        
+        System.out.println("Hello, Enter a1:");
+        a1 = in.nextInt();
        
         in.close();
         
-        execution(n);
+        execution(n, a1);
     }
 	
-	public static void execution(int n)
+	public static void execution(int n, int a1)
 	{
-		int [] matrix = new int[n];
+		int [] [] matrix = new int[n][n];
 		
-		matrix = random(matrix);
-		output(matrix);
-		sortingShell(matrix);
+		matrix = createMatrix(matrix, a1);
+	    output(matrix);
 	}
 	
-	public static int [] random(int [] matrix)
+	public static int [][] createMatrix(int [][] matrix, int a1)
 	{
-		for(int i=0; i < matrix.length; i++)
+		
+		for(int i=0; i < matrix.length; i++, a1++)
 		{
-			matrix[i]=(int)(Math.random()*100+1);
+				matrix[0][i] = a1;
 		}
-	
+		
+		a1=  matrix[0][0];
+		int key = 1;
+		for(int j=1; j < matrix.length; j++, key++)
+		{
+			for(int i=0; i < matrix.length; i++, a1++)
+			{
+				matrix[j][i] = a1 + key;
+				if (matrix[j][i]==matrix[0][matrix.length-1])
+					a1 = matrix[0][0] - key - 1;
+					
+			}
+		}
 		return matrix;
 	}
 	
 	
-	public static void sortingShell(int [] matrix)
+	public static void output(int [] [] matrix)
 	{
-		
+		System.out.println();
 		for(int j = 0; j < matrix.length; j++)
 		{
-			if(j!=(matrix.length-1) && matrix[j]>matrix[j+1])
+			for(int i = 0; i < matrix.length; i++)
 			{
-				int temp = matrix[j];
-				matrix[j] = matrix[j+1];
-				matrix[j+1] = temp;
-				if(j != 0)
-					j -= 2;
+				System.out.print(matrix[j][i]+" ");
 			}
+			System.out.println();
 		}
-		
-		output(matrix);
-	}
-	
-	
-	public static void output(int [] matrix)
-	{
-		for(int i = 0; i < matrix.length; i++)
-		{
-			System.out.print(matrix[i]+" ");
-		}
-		System.out.println();
-		
 	}
 }

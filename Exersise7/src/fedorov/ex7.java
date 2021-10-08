@@ -5,84 +5,53 @@ import java.util.Scanner;
 public class ex7 {
 	
 	public static void main(String[] args) {
-		int n, m;
+		int n;
 		Scanner in = new Scanner(System.in);
 		
-        System.out.println("Hello, Enter n:");
+        System.out.println("Hello, Enter N:");
         n = in.nextInt();
-        
-        System.out.println("Enter m:");
-        m = in.nextInt();
        
         in.close();
         
-        execution(n, m);
+        execution(n);
     }
 	
-	public static void execution(int n, int m)
+	public static void execution(int n)
 	{
-		int [] a = new int[n];
-		int [] b = new int[m];
+		int [] matrix = new int[n];
 		
-		a = random(a);
-		b = random(b);
-		output(a);
-		output(b);
-		joint(a, b);
+		matrix = random(matrix);
+		output(matrix);
+		sortingShell(matrix);
 	}
 	
 	public static int [] random(int [] matrix)
 	{
-		int c;
 		for(int i=0; i < matrix.length; i++)
 		{
-			if(i!=0)
-			{
-				c = (int)(Math.random()*10*i+1);
-				if(c > matrix[i-1])
-				{
-					matrix[i]= c;
-				} 
-				else {
-					i--;
-				}
-			}
-			else
-			{
-				c = (int)(Math.random()*10+1);
-				matrix[i]= c;
-			}
+			matrix[i]=(int)(Math.random()*100+1);
 		}
 	
 		return matrix;
 	}
 	
 	
-	public static void joint(int [] a, int [] b)
+	public static void sortingShell(int [] matrix)
 	{
-		int [] res = new int[a.length+b.length];
 		
-	
-		for(int i = 0, j = 0, k = 0; i < b.length || j < a.length;)
+		for(int j = 0; j < matrix.length; j++)
 		{
-			if(j!=a.length && a[j]<=b[i])
+			if(j!=(matrix.length-1) && matrix[j]>matrix[j+1])
 			{
-				res[k] = a[j];
-				k++;
-				j++;
-			}
-			else
-			{
-				if(i!=b.length)
-				{
-					res[k] = b[i];
-					k++;
-					i++;
-				}
+				int temp = matrix[j];
+				matrix[j] = matrix[j+1];
+				matrix[j+1] = temp;
+				if(j != 0)
+					j -= 2;
 			}
 		}
-		output(res);
 		
+		output(matrix);
 	}
 	
 	

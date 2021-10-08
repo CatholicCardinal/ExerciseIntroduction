@@ -1,24 +1,98 @@
 package fedorov;
 
+import java.util.Scanner;
+
 public class ex8 {
+	
 	public static void main(String[] args) {
-		ball b1 = new ball(1, color.black, size.medium);
-		ball b2 = new ball(2, color.blue, size.small);
-		ball b3 = new ball(3, color.purple, size.medium);
-		ball b4 = new ball(4, color.pink, size.big);
-		ball b5 = new ball(5, color.blue, size.big);
-		basket basket = new basket();
+		int n, m;
+		Scanner in = new Scanner(System.in);
 		
-		basket.putBallInBasket(b5);
-		basket.putBallInBasket(b4);
-		basket.putBallInBasket(b3);
-		basket.putBallInBasket(b2);
-		basket.putBallInBasket(b1);
+        System.out.println("Hello, Enter n:");
+        n = in.nextInt();
+        
+        System.out.println("Enter m:");
+        m = in.nextInt();
+       
+        in.close();
+        
+        execution(n, m);
+    }
+	
+	public static void execution(int n, int m)
+	{
+		int [] a = new int[n];
+		int [] b = new int[m];
 		
-		basket.sort();
-		basket.findBlue();
+		a = random(a);
+		b = random(b);
+		output(a);
+		output(b);
+		joint(a, b);
+	}
+	
+	public static int [] random(int [] matrix)
+	{
+		int c;
+		for(int i=0; i < matrix.length; i++)
+		{
+			if(i!=0)
+			{
+				c = (int)(Math.random()*10*i+1);
+				if(c > matrix[i-1])
+				{
+					matrix[i]= c;
+				} 
+				else {
+					i--;
+				}
+			}
+			else
+			{
+				c = (int)(Math.random()*10+1);
+				matrix[i]= c;
+			}
+		}
+	
+		return matrix;
+	}
+	
+	
+	public static void joint(int [] a, int [] b)
+	{
+		int [] res = new int[a.length+b.length];
+		
+	
+		for(int i = 0, j = 0, k = 0; i < b.length || j < a.length;)
+		{
+			if(j!=a.length && a[j]<=b[i])
+			{
+				res[k] = a[j];
+				k++;
+				j++;
+			}
+			else
+			{
+				if(i!=b.length)
+				{
+					res[k] = b[i];
+					k++;
+					i++;
+				}
+			}
+		}
+		output(res);
 		
 	}
 	
 	
+	public static void output(int [] matrix)
+	{
+		for(int i = 0; i < matrix.length; i++)
+		{
+			System.out.print(matrix[i]+" ");
+		}
+		System.out.println();
+		
+	}
 }
